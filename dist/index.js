@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const meow = require("meow");
@@ -19,48 +20,50 @@ const cli = meow({
 const source = cli.input[0];
 const PWD = process.cwd();
 const DIR = path.resolve(PWD, source);
-const tasks = new Listr([
-    {
-        title: `create project ${DIR}`,
-        task: () => {
-            return execa.shell(`mkdir ${DIR}`);
+(() => {
+    const tasks = new Listr([
+        {
+            title: `create project ${DIR}`,
+            task: () => {
+                return execa.shell(`mkdir ${DIR}`);
+            }
+        },
+        {
+            title: 'git clone',
+            task: () => {
+                return execa.shell(`git clone https://github.com/koa-next/koa-next ${DIR}`);
+            }
+        },
+        {
+            title: 'install modules',
+            task: () => {
+                return execa.shell(`cd ${DIR} && yarn`);
+            }
         }
-    },
-    {
-        title: 'git clone',
-        task: () => {
-            return execa.shell(`git clone https://github.com/koa-next/koa-next ${DIR}`);
-        }
-    },
-    {
-        title: 'install modules',
-        task: () => {
-            return execa.shell(`cd ${DIR} && yarn`);
-        }
-    }
-]);
-tasks
-    .run()
-    .then(() => {
-    console.log(chalk_1.default.green(`
-      We already ran yarn for you, so your next steps are:
+    ]);
+    tasks
+        .run()
+        .then(() => {
+        console.log(chalk_1.default.green(`
+        We already ran yarn for you, so your next steps are:
 
-      $ cd ${source}
+        $ cd ${source}
 
-      To build a version for production:
+        To build a version for production:
 
-      $ yarn build
+        $ yarn build
 
-      To run the server in production:
+        To run the server in production:
 
-      $ yarn start
+        $ yarn start
 
-      To start a local server for development:
+        To start a local server for development:
 
-      $ yarn dev
-   `));
-})
-    .catch((err) => {
-    chalk_1.default.red(err);
-});
+        $ yarn dev
+     `));
+    })
+        .catch((err) => {
+        chalk_1.default.red(err);
+    });
+})();
 //# sourceMappingURL=index.js.map

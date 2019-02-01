@@ -1,9 +1,12 @@
 {
   "name": "koa-next-cli",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A Tool For Building Koa-next Project",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "koa-next-cli": "dist/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
