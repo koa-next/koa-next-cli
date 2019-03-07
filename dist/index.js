@@ -10,8 +10,10 @@ const cli = meow({
     help: `
     ${chalk_1.default.bold('Description')}
       $ A Tool For Building Koa-next Project
+
     ${chalk_1.default.bold('Usage')}
       $ koa-next-cli <source>
+
     ${chalk_1.default.bold('Options')}
       --version           version
   `,
@@ -23,21 +25,21 @@ const DIR = path.resolve(PWD, source);
 (() => {
     const tasks = new Listr([
         {
-            title: `create project ${DIR}`,
+            title: `Create Project ${DIR}`,
             task: () => {
                 return execa.shell(`mkdir ${DIR}`);
             }
         },
         {
-            title: 'git clone',
+            title: 'Git Clone',
             task: () => {
                 return execa.shell(`git clone https://github.com/koa-next/koa-next ${DIR}`);
             }
         },
         {
-            title: 'install modules',
+            title: 'Install Modules',
             task: () => {
-                return execa.shell(`cd ${DIR} && yarn`);
+                return execa.shell(`cd ${DIR} && rm -rf .git && yarn`);
             }
         }
     ]);
